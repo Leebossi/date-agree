@@ -1,0 +1,32 @@
+{
+  "name": "date-agree-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "tsc": "tsc",
+    "dev": "ts-node-dev index.ts",
+    "lint": "eslint --ext .ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SirOswald/date-agree.git"
+  },
+  "author": "Leevi Ossi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SirOswald/date-agree/issues"
+  },
+  "homepage": "https://github.com/SirOswald/date-agree#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@typescript-eslint/eslint-plugin": "^5.26.0",
+    "@typescript-eslint/parser": "^5.26.0",
+    "eslint": "^8.16.0",
+    "ts-node-dev": "^2.0.0-0",
+    "typescript": "^4.7.2"
+  },
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
