@@ -1,11 +1,11 @@
 import {
   add,
   endOfMonth,
-  endOfWeek,
   format,
   getDay,
   parse,
   startOfToday,
+  sub,
 } from "date-fns";
 import { eachDayOfInterval } from "date-fns/esm";
 import React, { useState } from "react";
@@ -18,13 +18,18 @@ const App = () => {
 
   const newDays = eachDayOfInterval({
     start: firstDayCurrentMonth,
-    end: endOfWeek(endOfMonth(firstDayCurrentMonth)),
+    end: endOfMonth(firstDayCurrentMonth),
   });
   console.log(newDays);
 
   const nextMonth = () => {
     const firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
+  };
+
+  const previousMonth = () => {
+    const firstDayPreviousMonth = sub(firstDayCurrentMonth, { months: 1 });
+    setCurrentMonth(format(firstDayPreviousMonth, "MMM-yyyy"));
   };
 
   return (
@@ -39,9 +44,11 @@ const App = () => {
       ) : (
         <div className="calendar">
           <div className="month-indicator">
-            <h2>{format(firstDayCurrentMonth, "MMMM yyyy")}</h2>
-            <button>p</button>
-            <button onClick={nextMonth}>n</button>
+            <h2>{format(firstDayCurrentMonth, "MMM yyyy")}</h2>
+            <div>
+              <button onClick={previousMonth}>p</button>
+              <button onClick={nextMonth}>n</button>
+            </div>
           </div>
           <div className="day-of-week">
             <div>Mo</div>
@@ -56,9 +63,11 @@ const App = () => {
             {newDays.map((day, dayIndx) => (
               <div
                 key={day.toString()}
-                className={`${dayIndx === 0 ? colStartClasses[getDay(day)] : ''}`}
+                className={`${
+                  dayIndx === 0 ? colStartClasses[getDay(day)] : ""
+                }`}
               >
-                <button type="button">
+                <button type="button" className="day-button">
                   <time dateTime={format(day, "yyyy-MM-dd")}>
                     {format(day, "d")}
                   </time>
