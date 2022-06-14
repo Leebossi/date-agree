@@ -10,7 +10,7 @@ app.get("/ping", (_req, res) => {
   res.send("pong");
 });
 
-app.use('/api/events', eventRouter);
+app.use("/api/events", eventRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
