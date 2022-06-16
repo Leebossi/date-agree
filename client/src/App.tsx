@@ -9,6 +9,7 @@ import {
 } from "date-fns";
 import { eachDayOfInterval } from "date-fns/esm";
 import React, { useState } from "react";
+import DateForm from "./components/DateForm";
 
 const App = () => {
   const today = startOfToday();
@@ -20,7 +21,6 @@ const App = () => {
     start: firstDayCurrentMonth,
     end: endOfMonth(firstDayCurrentMonth),
   });
-  console.log(newDays);
 
   const nextMonth = () => {
     const firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
@@ -32,6 +32,7 @@ const App = () => {
     setCurrentMonth(format(firstDayPreviousMonth, "MMM-yyyy"));
   };
 
+  console.log(createClicked);
   return (
     <div className="app">
       {!createClicked ? (
@@ -42,41 +43,40 @@ const App = () => {
           </button>
         </div>
       ) : (
-        <div className="calendar">
-          <div className="month-indicator">
-            <h2>{format(firstDayCurrentMonth, "MMM yyyy")}</h2>
-            <div>
-              <button onClick={previousMonth}>p</button>
-              <button onClick={nextMonth}>n</button>
-            </div>
-          </div>
-          <div className="day-of-week">
-            <div>Mo</div>
-            <div>Tu</div>
-            <div>We</div>
-            <div>Th</div>
-            <div>Fr</div>
-            <div>Sa</div>
-            <div>Su</div>
-          </div>
-          <div className="date-grid">
-            {newDays.map((day, dayIndx) => (
-              <div
-                key={day.toString()}
-                className={`${
-                  dayIndx === 0 ? colStartClasses[getDay(day)] : ""
-                }`}
-              >
-                <button type="button" className="day-button">
-                  <time dateTime={format(day, "yyyy-MM-dd")}>
-                    {format(day, "d")}
-                  </time>
-                </button>
-              </div>
-            ))}
+        <DateForm />
+      )}
+      <div className="calendar">
+        <div className="month-indicator">
+          <h2>{format(firstDayCurrentMonth, "MMM yyyy")}</h2>
+          <div>
+            <button onClick={previousMonth}>prev</button>
+            <button onClick={nextMonth}>next</button>
           </div>
         </div>
-      )}
+        <div className="day-of-week">
+          <div>Mo</div>
+          <div>Tu</div>
+          <div>We</div>
+          <div>Th</div>
+          <div>Fr</div>
+          <div>Sa</div>
+          <div>Su</div>
+        </div>
+        <div className="date-grid">
+          {newDays.map((day, dayIndx) => (
+            <div
+              key={day.toString()}
+              className={`${dayIndx === 0 ? colStartClasses[getDay(day)] : ""}`}
+            >
+              <button type="button" className="day-button">
+                <time dateTime={format(day, "yyyy-MM-dd")}>
+                  {format(day, "d")}
+                </time>
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
