@@ -15,22 +15,11 @@ const Calendar = () => {
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
-  console.log(selectedDates);
 
   const newDays = eachDayOfInterval({
     start: firstDayCurrentMonth,
     end: endOfMonth(firstDayCurrentMonth),
   });
-
-  const nextMonth = () => {
-    const firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
-    setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
-  };
-
-  const previousMonth = () => {
-    const firstDayPreviousMonth = sub(firstDayCurrentMonth, { months: 1 });
-    setCurrentMonth(format(firstDayPreviousMonth, "MMM-yyyy"));
-  };
 
   const colStartClasses = [
     "",
@@ -43,11 +32,21 @@ const Calendar = () => {
     "col-start-7",
   ];
 
-  const onDayChange = (event: any) => {
-    let dateTime = event.target.dateTime;
+  const nextMonth = () => {
+    const firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
+    setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
+  };
+
+  const previousMonth = () => {
+    const firstDayPreviousMonth = sub(firstDayCurrentMonth, { months: 1 });
+    setCurrentMonth(format(firstDayPreviousMonth, "MMM-yyyy"));
+  };
+
+  const onDayChange = (e: any) => {
+    let dateTime = e.target.dateTime;
 
     if (!dateTime) {
-      dateTime = event.target.querySelector("time").dateTime;
+      dateTime = e.target.querySelector("time").dateTime;
     }
 
     if (selectedDates.includes(dateTime)) {
@@ -59,47 +58,56 @@ const Calendar = () => {
     }
   };
 
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    console.log(selectedDates);
+  };
+
   return (
-    <div className="calendar">
-      <div className="month-indicator">
-        <h2>{format(firstDayCurrentMonth, "MMM yyyy")}</h2>
-        <div>
-          <button onClick={previousMonth}>prev</button>
-          <button onClick={nextMonth}>next</button>
+    <form onSubmit={handleSubmit}>
+      <div className="calendar">
+        <div className="month-indicator">
+          <h2>{format(firstDayCurrentMonth, "MMM yyyy")}</h2>
+          <div>
+            <button onClick={previousMonth} type="button">prev</button>
+            <button onClick={nextMonth} type="button">next</button>
+          </div>
+        </div>
+        <div className="day-of-week">
+          <div>Mo</div>
+          <div>Tu</div>
+          <div>We</div>
+          <div>Th</div>
+          <div>Fr</div>
+          <div>Sa</div>
+          <div>Su</div>
+        </div>
+        <div className="date-grid">
+          {newDays.map((day, dayIndx) => (
+            <div
+              key={day.toString()}
+              className={`${dayIndx === 0 ? colStartClasses[getDay(day)] : ""}`}
+            >
+              <button
+                type="button"
+                className={
+                  selectedDates.includes(format(day, "yyyy-MM-dd"))
+                    ? "day-button-checked"
+                    : "day-button"
+                }
+                onClick={onDayChange}
+              >
+                <time dateTime={format(day, "yyyy-MM-dd")}>
+                  {format(day, "d")}
+                </time>
+              </button>
+            </div>
+          ))}
         </div>
       </div>
-      <div className="day-of-week">
-        <div>Mo</div>
-        <div>Tu</div>
-        <div>We</div>
-        <div>Th</div>
-        <div>Fr</div>
-        <div>Sa</div>
-        <div>Su</div>
-      </div>
-      <div className="date-grid">
-        {newDays.map((day, dayIndx) => (
-          <div
-            key={day.toString()}
-            className={`${dayIndx === 0 ? colStartClasses[getDay(day)] : ""}`}
-          >
-            <button
-              type="button"
-              className={
-                selectedDates.includes(format(day, "yyyy-MM-dd"))
-                  ? "day-button-checked"
-                  : "day-button"
-              }
-              onClick={onDayChange}
-            >
-              <time dateTime={format(day, "yyyy-MM-dd")}>
-                {format(day, "d")}
-              </time>
-            </button>
-          </div>
-        ))}
-      </div>
-    </div>
+      <button type="submit">submit</button>
+      <button type="reset" onClick={() => setSelectedDates([])}>reset</button>
+    </form>
   );
 };
 
