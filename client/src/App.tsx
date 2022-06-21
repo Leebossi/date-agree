@@ -32,7 +32,6 @@ const App = () => {
     setCurrentMonth(format(firstDayPreviousMonth, "MMM-yyyy"));
   };
 
-  console.log(createClicked);
   return (
     <div className="app">
       {!createClicked ? (

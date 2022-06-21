@@ -16,6 +16,7 @@ const DateForm = () => {
     "december",
   ];
 
+  const [title, setTitle] = useState("");
   const [checkedState, setCheckedState] = useState(
     new Array(months.length).fill(false)
   );
@@ -25,13 +26,19 @@ const DateForm = () => {
     const selectedMonths: string[] = [];
     checkedState.forEach((value, index) => {
       if (value === true) {
-        selectedMonths.push(months[index])
+        selectedMonths.push(months[index]);
       }
-    })
-    console.log(selectedMonths)
+    });
+
+    const formData = {
+      title: title,
+      months: selectedMonths,
+    };
+
+    console.log(formData);
   };
 
-  const handleChange = (position: number) => {
+  const handleCheckboxChange = (position: number) => {
     const updatedCheckedState = checkedState.map((item, index) =>
       index === position ? !item : item
     );
@@ -39,12 +46,19 @@ const DateForm = () => {
     setCheckedState(updatedCheckedState);
   };
 
-  console.log(checkedState);
+  const handleChange = (event: any) => {
+    setTitle(event.target.value);
+  };
+
   return (
     <div className="form-container">
       <h2>DateForm</h2>
       <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Kesäinen Mökkireissu" />
+        <input
+          type="text"
+          placeholder="Kesäinen Mökkireissu"
+          onChange={handleChange}
+        />
         <ul className="months-linst">
           {months.map((month, index) => {
             return (
@@ -56,7 +70,7 @@ const DateForm = () => {
                     name={month}
                     value={month}
                     checked={checkedState[index]}
-                    onChange={() => handleChange(index)}
+                    onChange={() => handleCheckboxChange(index)}
                   />
                   <label htmlFor={`custome-checkbox-${index}`}>{month}</label>
                 </div>
