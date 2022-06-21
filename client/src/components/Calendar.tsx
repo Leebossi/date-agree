@@ -49,7 +49,7 @@ const Calendar = () => {
     if (!dateTime) {
       dateTime = event.target.querySelector("time").dateTime;
     }
-    
+
     if (selectedDates.includes(dateTime)) {
       console.log(`Removing ${dateTime}`);
       setSelectedDates(selectedDates.filter((date) => date !== dateTime));
@@ -83,7 +83,18 @@ const Calendar = () => {
             key={day.toString()}
             className={`${dayIndx === 0 ? colStartClasses[getDay(day)] : ""}`}
           >
-            <button type="button" className="day-button" onClick={onDayChange}>
+            <button
+              type="button"
+              className="day-button"
+              onClick={onDayChange}
+              style={{
+                backgroundColor: selectedDates.includes(
+                  format(day, "yyyy-MM-dd")
+                )
+                  ? "#0071F8"
+                  : "",
+              }}
+            >
               <time dateTime={format(day, "yyyy-MM-dd")}>
                 {format(day, "d")}
               </time>
