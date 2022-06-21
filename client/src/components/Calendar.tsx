@@ -1,10 +1,21 @@
-import { add, eachDayOfInterval, endOfMonth, format, getDay, parse, startOfToday, sub } from "date-fns";
+import {
+  add,
+  eachDayOfInterval,
+  endOfMonth,
+  format,
+  getDay,
+  parse,
+  startOfToday,
+  sub,
+} from "date-fns";
 import React, { useState } from "react";
 
 const Calendar = () => {
   const today = startOfToday();
+  const [selectedDates, setSelectedDates] = useState<string[]>([]);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
+  console.log(selectedDates);
 
   const newDays = eachDayOfInterval({
     start: firstDayCurrentMonth,
@@ -32,6 +43,22 @@ const Calendar = () => {
     "col-start-7",
   ];
 
+  const onDayChange = (event: any) => {
+    let dateTime = event.target.dateTime;
+
+    if (!dateTime) {
+      dateTime = event.target.querySelector("time").dateTime;
+    }
+    
+    if (selectedDates.includes(dateTime)) {
+      console.log(`Removing ${dateTime}`);
+      setSelectedDates(selectedDates.filter((date) => date !== dateTime));
+    } else {
+      console.log(`Adding ${dateTime}`);
+      setSelectedDates((dates) => [...dates, dateTime]);
+    }
+  };
+
   return (
     <div className="calendar">
       <div className="month-indicator">
@@ -56,7 +83,7 @@ const Calendar = () => {
             key={day.toString()}
             className={`${dayIndx === 0 ? colStartClasses[getDay(day)] : ""}`}
           >
-            <button type="button" className="day-button">
+            <button type="button" className="day-button" onClick={onDayChange}>
               <time dateTime={format(day, "yyyy-MM-dd")}>
                 {format(day, "d")}
               </time>
