@@ -73,7 +73,12 @@ ul {
   grid-template-columns: repeat(7, 1fr);
 }
 
-.day-button {
+.day-button,
+.day-button-checked {
   height: 100%;
   width: 100%;
+}
+
+.day-button-checked {
+  background-color: aqua;
 }

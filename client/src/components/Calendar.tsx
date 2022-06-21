@@ -85,15 +85,12 @@ const Calendar = () => {
           >
             <button
               type="button"
-              className="day-button"
+              className={
+                selectedDates.includes(format(day, "yyyy-MM-dd"))
+                  ? "day-button-checked"
+                  : "day-button"
+              }
               onClick={onDayChange}
-              style={{
-                backgroundColor: selectedDates.includes(
-                  format(day, "yyyy-MM-dd")
-                )
-                  ? "#0071F8"
-                  : "",
-              }}
             >
               <time dateTime={format(day, "yyyy-MM-dd")}>
                 {format(day, "d")}
