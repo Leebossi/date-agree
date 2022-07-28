@@ -1,9 +1,10 @@
 import express from "express";
 import eventRouter from "./routes/events";
+import { PORT } from "./util/config";
+import connectToDatabase from "./util/db";
+
 const app = express();
 app.use(express.json());
-
-const PORT = 3000;
 
 app.get("/ping", (_req, res) => {
   console.log("someone pinged here");
@@ -12,6 +13,11 @@ app.get("/ping", (_req, res) => {
 
 app.use("/api/events", eventRouter);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+const start = async () => {
+  await connectToDatabase();
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+};
+
+void start();
