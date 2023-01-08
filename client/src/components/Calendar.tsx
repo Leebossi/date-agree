@@ -8,7 +8,7 @@ import {
   startOfToday,
   sub,
 } from "date-fns";
-import React, { useState } from "react";
+import { useState } from "react";
 
 const Calendar = () => {
   const today = startOfToday();
@@ -69,8 +69,12 @@ const Calendar = () => {
         <div className="month-indicator">
           <h2>{format(firstDayCurrentMonth, "MMM yyyy")}</h2>
           <div>
-            <button onClick={previousMonth} type="button">prev</button>
-            <button onClick={nextMonth} type="button">next</button>
+            <button onClick={previousMonth} type="button">
+              prev
+            </button>
+            <button onClick={nextMonth} type="button">
+              next
+            </button>
           </div>
         </div>
         <div className="day-of-week">
@@ -106,7 +110,9 @@ const Calendar = () => {
         </div>
       </div>
       <button type="submit">submit</button>
-      <button type="reset" onClick={() => setSelectedDates([])}>reset</button>
+      <button type="reset" onClick={() => setSelectedDates([])}>
+        reset
+      </button>
     </form>
   );
 };
