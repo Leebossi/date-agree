@@ -59,7 +59,7 @@ const DateForm = () => {
           placeholder="Kesäinen Mökkireissu"
           onChange={handleChange}
         />
-        <ul className="months-linst">
+        <ul className="month-list">
           {months.map((month, index) => {
             return (
               <li key={index}>

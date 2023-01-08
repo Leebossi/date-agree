@@ -69,10 +69,10 @@ const Calendar = () => {
         <div className="month-indicator">
           <h2>{format(firstDayCurrentMonth, "MMM yyyy")}</h2>
           <div>
-            <button onClick={previousMonth} type="button">
+            <button onClick={previousMonth} type="button" className="calendar-button">
               prev
             </button>
-            <button onClick={nextMonth} type="button">
+            <button onClick={nextMonth} type="button" className="calendar-button">
               next
             </button>
           </div>
@@ -96,8 +96,8 @@ const Calendar = () => {
                 type="button"
                 className={
                   selectedDates.includes(format(day, "yyyy-MM-dd"))
-                    ? "day-button-checked"
-                    : "day-button"
+                    ? "calendar-button day-button-checked"
+                    : "calendar-button day-button"
                 }
                 onClick={onDayChange}
               >
@@ -109,8 +109,8 @@ const Calendar = () => {
           ))}
         </div>
       </div>
-      <button type="submit">submit</button>
-      <button type="reset" onClick={() => setSelectedDates([])}>
+      <button type="submit" className="calendar-button">submit</button>
+      <button type="reset" onClick={() => setSelectedDates([])} className="calendar-button">
         reset
       </button>
     </form>
