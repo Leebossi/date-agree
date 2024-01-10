@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize";
 import { DATABASE_URL } from "./config";
 
-const sequelize = new Sequelize(DATABASE_URL as string, {
+export const sequelize = new Sequelize(DATABASE_URL as string, {
   dialectOptions: {
     ssl: {
       require: true,
@@ -10,7 +10,7 @@ const sequelize = new Sequelize(DATABASE_URL as string, {
   },
 });
 
-const connectToDatabase = async () => {
+export const connectToDatabase = async () => {
   try {
     await sequelize.authenticate();
     console.log("database connected");
@@ -21,5 +21,3 @@ const connectToDatabase = async () => {
 
   return null;
 };
-
-export default connectToDatabase;

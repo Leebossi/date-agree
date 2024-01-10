@@ -1,7 +1,7 @@
 import express from "express";
 import eventRouter from "./routes/events";
 import { PORT } from "./util/config";
-import connectToDatabase from "./util/db";
+import { connectToDatabase } from "./util/db";
 
 const app = express();
 app.use(express.json());
